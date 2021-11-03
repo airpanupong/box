@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <title> ConnectionWIFI </title>
+    <style>
+        body {
+    
+        }
+        
+        .input {
+            padding: 5px;
+        }
+        
+        .button {
+            padding: 5px;
+        }
+        
+        input {
+            width: 200px;
+            padding: 5px;
+            border: solid 1px black;
+            border-radius: 10px;
+        }
+        
+        button {
+            padding: 6px;
+            border: solid 1px gray;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div align='center'>
+    <div class='input'>
+        <label>SSID: </label><input id='ssid'>
+    </div>
+    <div class='input'>
+        <label>PASS: </label><input id='password'>
+    </div>
+    <div class='button'>
+        <button id='SubmitButton'>Submit</button>
+    </div>
+ </div>
+</body>
+
+<script>
+    document.getElementById('SubmitButton').onclick = function() {
+        console.log('Submit Button is click...');
+        /* post api request */
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == XMLHttpRequest.DONE) {
+                if (xmlHttp.status == 200) { /* success request [code: 200] */
+                    alert('Sending Success');
+                } else if (xmlHttp.status == 500) { /* fail request [another code] */
+                    alert('Sending fail');
+                }
+            }
+        };
+        var data = JSON.stringify({
+            ssid: document.getElementById('ssid').value,
+            pass: document.getElementById('password').value
+        });
+        xmlHttp.open('POST', '/ap'); /* create POST api */
+        xmlHttp.send(data); /* send api to board */
+    };
+
+    document.getElementById('ReloadButton').click();
+</script>
+
+</html>
